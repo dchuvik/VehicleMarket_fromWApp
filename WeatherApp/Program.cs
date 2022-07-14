@@ -31,6 +31,7 @@ namespace WeatherApp
             {                
                 Console.WriteLine("Please enter your VIN number: ");
                 string VIN = Console.ReadLine();
+                Console.WriteLine();
 
                 wx.GetAPIResponse(VIN);
                 wx.GetWeather();
