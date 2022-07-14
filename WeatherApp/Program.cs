@@ -29,24 +29,23 @@ namespace WeatherApp
 
             do
             {                
-                Console.WriteLine("Please enter your zipcode: ");
-                string zipCode = Console.ReadLine();
+                Console.WriteLine("Please enter your VIN number: ");
+                string VIN = Console.ReadLine();
 
-                wx.GetAPIResponse(zipCode);
+                wx.GetAPIResponse(VIN);
                 wx.GetWeather();
 
-                Console.WriteLine($"Current weather for {wx.CityName}");
-                Console.WriteLine($"Temperature: {wx.Temperature}°");
-                Console.WriteLine($"Heat Index: {wx.HeatIndex}°");
-                Console.WriteLine($"Condition: {wx.Condition}");
-                Console.WriteLine($"Humidity: {wx.Humidity}");
-                Console.WriteLine($"Wind Speed: {wx.WindSpeed} mph");
-                Console.WriteLine($"Sunrise: {wx.Sunrise.ToLocalTime().ToShortTimeString()}");
-                Console.WriteLine($"Sunset: {wx.Sunset.ToLocalTime().ToShortTimeString()}");
+                Console.WriteLine($"Year: {wx.ModelYear}");
+                Console.WriteLine($"Make: {wx.Make}");
+                Console.WriteLine($"Model: {wx.Model}");
+                Console.WriteLine($"Average Milage: {wx.AverageMileage} miles");
+                Console.WriteLine($"MSRP Value: ${wx.MSRP}");
+                Console.WriteLine($"Trade-In Value: ${wx.TradeIn}");
+                Console.WriteLine($"Retail Value: ${wx.Retail}");
                 Console.WriteLine();
                 //Thread.Sleep(5000);
 
-                Console.WriteLine("Would you like to get weather for another location?");
+                Console.WriteLine("Would you like to get data for another vehicle?");
                 Console.WriteLine("Y or N?");
                 var userResponse = Console.ReadLine().ToLower();
                 cont = (userResponse == "n") ? false : true;

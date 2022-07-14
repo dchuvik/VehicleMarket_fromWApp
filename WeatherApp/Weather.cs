@@ -10,23 +10,24 @@ namespace WeatherApp
         public Weather()
         {
         }
-
         public string APIResponse { get; set; }
-        public double Temperature { get; set; }
-        public double HeatIndex { get; set; }
-        public string Condition { get; set; }
-        public double Humidity { get; set; }
-        public double WindSpeed { get; set; }
-        public string CityName { get; set; }
-        public DateTime Sunrise { get; set; }
-        public DateTime Sunset { get; set; }
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public int ModelYear { get; set; }
+        public int AverageMileage { get; set; }
+        public int MSRP { get; set; }
+        public int Retail { get; set; }
+        public int TradeIn { get; set; }
 
-        public void GetAPIResponse(string zipCode)
+
+
+
+        public void GetAPIResponse(string VIN)
         {
             var key = File.ReadAllText("appsettings.json");
             var APIkey = JObject.Parse(key).GetValue("DefaultKey").ToString();
 
-            var apiCall = $"https://api.openweathermap.org/data/2.5/weather?zip={zipCode}&units=imperial&appid={APIkey}";
+            var apiCall = $"https://api.carsxe.com/marketvalue?key={APIkey}&vin={VIN}&format=json";
 
             var client = new HttpClient();
 
@@ -35,58 +36,50 @@ namespace WeatherApp
             this.APIResponse = response;
         }
 
-        public void GetTemp()
+        public void GetMake()
         {
-            this.Temperature = double.Parse(JObject.Parse(this.APIResponse)["main"]["temp"].ToString());
+            this.Make = JObject.Parse(APIResponse)["make"].ToString();
         }
 
-        public void GetHeatIndex()
+        public void GetModel()
         {
-            this.HeatIndex = double.Parse(JObject.Parse(this.APIResponse)["main"]["feels_like"].ToString());
+            this.Model = JObject.Parse(APIResponse)["model"].ToString();
         }
 
-        public void GetCondition()
+        public void GetModelYear()
         {
-            this.Condition = JObject.Parse(this.APIResponse)["weather"][0]["main"].ToString();
+            this.ModelYear = int.Parse(JObject.Parse(this.APIResponse)["modelYear"].ToString());
         }
 
-        public void GetHumidity()
+        public void GetAverageMileage()
         {
-            this.Humidity = double.Parse(JObject.Parse(this.APIResponse)["main"]["humidity"].ToString());
+            this.AverageMileage = int.Parse(JObject.Parse(this.APIResponse)["averageMileage"].ToString());
         }
 
-        public void GetWindSpeed()
+        public void GetMSRP()
         {
-            this.WindSpeed = double.Parse(JObject.Parse(this.APIResponse)["wind"]["speed"].ToString());
+            this.MSRP = int.Parse(JObject.Parse(this.APIResponse)["msrp"].ToString());
         }
 
-        public void GetCityName()
+        public void GetRetail()
         {
-            CityName = JObject.Parse(APIResponse)["name"].ToString();
+            this.Retail = int.Parse(JObject.Parse(this.APIResponse)["retail"].ToString());
         }
 
-        public void GetSunriseAndSunset()
+        public void GetTradeIn()
         {
-            var sunrise = long.Parse(JObject.Parse(APIResponse)["sys"]["sunrise"].ToString());
-            var sunriseOffset = DateTimeOffset.FromUnixTimeSeconds(sunrise);
-            this.Sunrise = sunriseOffset.DateTime;
-
-            
-
-            var sunset = long.Parse(JObject.Parse(APIResponse)["sys"]["sunset"].ToString());
-            var sunsetOffset = DateTimeOffset.FromUnixTimeSeconds(sunset);
-            this.Sunset = sunsetOffset.DateTime;
+            this.TradeIn = int.Parse(JObject.Parse(this.APIResponse)["tradeIn"].ToString());
         }
 
         public void GetWeather()
         {
-            GetCityName();
-            GetTemp();
-            GetHeatIndex();
-            GetCondition();
-            GetHumidity();
-            GetWindSpeed();
-            GetSunriseAndSunset();
+            GetModelYear();
+            GetMake();
+            GetModel();
+            GetAverageMileage();
+            GetMSRP();
+            GetRetail();
+            GetTradeIn();
         }
     }
 }
